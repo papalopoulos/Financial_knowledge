@@ -1,0 +1,83 @@
+function au
+clc
+%%% PROBA
+T=[4.87,4.64,4.62,4.52,4.44,4.33,4.54,4.58,4.54,4.5,4.49,4.48,4.48,4.36,4.32,4.43,4.41,4.44];
+x=[]
+for i=1:length(T)-1
+    if T(i)<T(i+1)
+        x(i)=1
+    else
+        x(i)=0
+    end
+end
+figure(1)
+subplot(2,1,1)
+plot(T,'k')
+grid on
+subplot(2,1,2)
+plot(x,'r')
+grid on
+%% BOT (PRUEBA 1)%%
+function riq
+fb=xlsread('Book4.xlsx','Sheet1','F2:F20');
+fb1=xlsread('Book4.xlsx','Sheet1','B2:B24');
+%% STOCHASTIC
+N=14;
+L=fb;
+H=fb;
+st=StoK(N,fb,L,H);
+function [K]=StoK(n,c,l,h)
+m = length(c);
+K = zeros(m,1);
+for i = n:m
+ v1 = l(i-n+1:i);
+ v2 = h(i-n+1:i);
+ ll = min(v1);
+ hh = max(v2);
+ K(i) = ((c(i)-ll)/(hh-ll))*100;
+end
+end
+%% MOVING AVERAGE
+w=3;
+ma=movingAverage(st,w);
+function y = movingAverage(x, w)
+   k = ones(1, w) / w;
+   y = conv(x, k, 'same');
+end
+plot(st,'k')
+hold on
+plot(ma,'b')
+plot([0,length(ma)],[80,80],'r')
+plot([0,length(ma)],[20,20],'r')
+grid on
+legend('%K','%D','location','northeast')
+
+po=[ma,st]
+
+richi=0
+for k=1:length(st)
+%     for d=1:length(ma)
+        if st(k)>=80  
+          richi(k)=2;
+%         elseif st(k)==ma(d) && st(k)>=20
+%             richi(k)=1;
+        elseif st(k)<=20
+            richi(k)=1;
+            
+        end
+    end
+% end
+richi
+ poi=[ma,richi']
+length(st)
+length(richi)
+figure(2)
+subplot(2,2,1)
+plot(fb)
+subplot(2,1,1)
+plot(st)
+hold on
+plot(ma)
+% 
+end 
+end
