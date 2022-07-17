@@ -1,0 +1,25 @@
+function cineticaheterogenea
+%%RCTA%%
+k3=0.0328
+kw=15.53
+ka=0.679
+nn=36
+nw=166.35
+na=6242.24
+isobuta=0
+    function y=funode(t,N)
+        y=zeros(3,1)
+        y(1,1)=-(nn*k3*ka*N(1))./(1+ka*N(1)+kw*N(2));
+        y(2,1)=((nn*k3*ka*N(1))./(1+ka*N(1)+kw*N(2)));
+        y(3,1)=((nn*k3*ka*N(1))./(1+ka*N(1)+kw*N(2)));
+    end
+[t,N]=ode45(@funode,[0 28800],[na,nw,isobuta])
+
+figure(1)
+plot (t,N(:,1),'-k',t,N(:,2),'-b',t,N(:,3),'-r')
+y=[t N]
+grid on
+xlabel('temps')
+ylabel('mols')
+legend('Na','Nw','isobuta')
+end
