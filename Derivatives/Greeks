@@ -1,1 +1,26 @@
+SP=4.3775;
+KP=4.9;
+sigmaP=0.14;
+rP=0.1;
+TP=69/365;
+ti=10/365;
+atP=0;
 
+d1=((log(SP/KP))+rP+(0.5*(sigmaP^2))*(TP-atP))/(sigmaP*sqrt(TP-atP))
+d2=d1-sigmaP*sqrt(TP-atP);
+
+dNormd1=normpdf(d1,0,1);
+dNormd2=normpdf(d2,0,1);
+DNormd2=normcdf(d2,0,1);
+DNormd2m=normcdf(-d2,0,1);
+
+thetaC=-(SP*dNormd1*sigmaP/2*sqrt(TP-atP))-rP*KP*exp(-rP*(TP-atP))*DNormd2
+thetaP=-(SP*dNormd1*sigmaP/2*sqrt(TP-atP))+rP*KP*exp(-rP*(TP-atP))*DNormd2m
+
+DNormd1=normcdf(d1,0,1);
+DNormd1m=normcdf(-d1,0,1);
+
+deltaC=DNormd1
+deltaP=-DNormd1m
+
+gamma=(dNormd1)/(SP*sigmaP*sqrt(TP-atP))
