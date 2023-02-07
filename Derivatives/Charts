@@ -1,0 +1,64 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+import pandas as pd
+
+twenty=[0,0,5.11,0,0,1.33,3.05,12.47,0,5.91,0.41,4.27]
+btc_twenty=[0,0,-24.94,34.56,9.57,-3.38,24.06,2.74,-7.46,28.04,42.77,46.77]
+
+twe_one=[10.09,13,0,141.47,16.90,1.31,-24.28,2.57,43.22,7.30,11.73,72.92]
+btc_twentyone=[14.37,36.41,30.11,-1.78,-35.38,-6.09,18.63,13.42,-7.02,39.9,-7.22,-18.75]
+
+X = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII']
+
+
+figure, axis = plt.subplots(1, 2,figsize=(10, 5))
+
+figure.suptitle('Monthly returns')
+
+axis[0].plot(X, twenty, 'b', label='Portfolio')
+axis[0].plot(X, btc_twenty, 'r', label='BTC')
+axis[0].grid()
+axis[0].set_title("2020")
+axis[0].set_xlabel("Months")
+axis[0].set_ylabel("Return (%)")
+axis[0].legend(loc=0)
+
+axis[1].plot(X, twe_one, 'b', label='Portfolio')
+axis[1].plot(X, btc_twentyone, 'r', label='BTC')
+axis[1].grid()
+axis[1].set_title("2021")
+axis[1].set_xlabel("Months")
+axis[1].legend(loc=0)
+
+plt.show()
+
+punt=[100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000,4500,5000]
+pren=[0.4509804,0.1372549,0.1176471,0.0588235,0.0196078,0.0196078,0,0,0.0392157,0.0392157,0,0.0392157,0,0.0392157,0.0196078,0,0,0.0196078]
+acum=[0.4509804,0.5882353,0.7058824,0.7647059,0.7843137,0.8039216,0.8039216,0.8039216,0.8431373,0.8823529,0.8823529,0.9215686,0.9215686,0.9607843,0.9803922,0.9803922,0.9803922,1]
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+width = .35 # width of a bar
+
+m1_t = pd.DataFrame({
+    'punt': [100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000,4500,5000],
+    'pren': [0.4509804,0.1372549,0.1176471,0.0588235,0.0196078,0.0196078,0,0,0.0392157,0.0392157,0,0.0392157,0,0.0392157,0.0196078,0,0,0.0196078],
+    'acum': [0.4509804,0.5882353,0.7058824,0.7647059,0.7843137,0.8039216,0.8039216,0.8039216,0.8431373,0.8823529,0.8823529,0.9215686,0.9215686,0.9607843,0.9803922,0.9803922,0.9803922,1]})
+
+m1_t['pren'].plot(kind='bar', width = width)
+plt.ylim(0,1)
+plt.ylabel('% frequency')
+
+m1_t['acum'].plot(secondary_y=True)
+plt.ylim(0,1)
+plt.ylabel('Cumulative frequency')
+plt.gca()
+
+plt.xlim([-width, len(m1_t['punt'])-width])
+
+ax.set_xticklabels(('100','200','300','400','500','600','700','800','900','1000','1500','2000','2500','3000','3500','4000','4500','5000'))
+ax.set_xlabel('P/L')
+ax.grid()
+
+plt.show()
